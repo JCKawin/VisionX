@@ -195,14 +195,15 @@ def run(usb_index=USB_INDEX, target_fps=TARGET_FPS,
 
                 detections = yolo11_postprocess(mat_out_np, orig_w, orig_h, scale, pad_x, pad_y)
 
-                for (_, _, _, _, score, cls) in detections:
+                for (x1, y1, x2, y2, score, cls) in detections:
                     class_name = COCO_CLASSES[cls]
 
-                    # *** ONLY PRINT CAN-MOVE OBJECTS ***
+                    # ONLY print can-move objects
                     if class_name not in CAN_MOVE:
                         continue
 
-                    print(f"{class_name} can-move {score:.2f}")
+                    # NEW PRINT FORMAT
+                    print(f"{class_name} {score:.2f} ({x1},{y1},{x2},{y2})")
 
                 if out_writer:
                     out_writer.write(frame)
