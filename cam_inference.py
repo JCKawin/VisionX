@@ -9,7 +9,7 @@ INPUT_NAME  = "in0"
 OUTPUT_NAME = "out0"
 USB_INDEX   = 1
 TARGET_FPS  = 2
-CONF_THRESH = 0.25
+CONF_THRESH = 0.60
 NMS_THRESH  = 0.45
 FONT = cv2.FONT_HERSHEY_SIMPLEX
 
@@ -180,7 +180,7 @@ def run(usb_index=USB_INDEX, target_fps=TARGET_FPS,
                     mat_out_np = None
 
                 detections = yolo11_postprocess(mat_out_np, orig_w, orig_h, scale, pad_x, pad_y)
-                
+
                 for (x1, y1, x2, y2, score, cls) in detections:
                     class_name = COCO_CLASSES[cls] if 0 <= cls < 80 else f"class_{cls}"
                     label = f"{class_name} {score:.2f}"
