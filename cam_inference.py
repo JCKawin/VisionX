@@ -13,9 +13,24 @@ CONF_THRESH = 0.20
 NMS_THRESH  = 0.45
 FONT = cv2.FONT_HERSHEY_SIMPLEX
 
-# ---------------------------------------------------------
-# ⭐ ADDED: COCO 80-class name list
-# ---------------------------------------------------------
+
+CAN_MOVE = {
+    "person","bird","cat","dog","horse","sheep","cow",
+    "elephant","bear","zebra","giraffe",
+    "car","motorcycle","airplane","bus","train","truck","boat"
+}
+
+CANNOT_MOVE = {
+    "backpack","umbrella","handbag","tie","suitcase","frisbee","skis","snowboard",
+    "sports ball","kite","baseball bat","baseball glove","skateboard","surfboard",
+    "tennis racket","bottle","wine glass","cup","fork","knife","spoon","bowl",
+    "banana","apple","sandwich","orange","broccoli","carrot","hot dog","pizza",
+    "donut","cake","chair","couch","potted plant","bed","dining table","toilet",
+    "tv","laptop","mouse","remote","keyboard","cell phone","microwave","oven",
+    "toaster","sink","refrigerator","book","clock","vase","scissors","teddy bear",
+    "hair drier","toothbrush","fire hydrant","stop sign","parking meter","bench"
+}
+
 COCO_CLASSES = [
     "person","bicycle","car","motorcycle","airplane","bus","train","truck",
     "boat","traffic light","fire hydrant","stop sign","parking meter","bench",
@@ -182,9 +197,10 @@ def run(usb_index=USB_INDEX, target_fps=TARGET_FPS,
                 detections = yolo11_postprocess(mat_out_np, orig_w, orig_h, scale, pad_x, pad_y)
 
                 for (x1, y1, x2, y2, score, cls) in detections:
-                    class_name = COCO_CLASSES[cls] if 0 <= cls < 80 else f"class_{cls}"
-                    label = f"{class_name} {score:.2f}"
-
+                    class_name = COCO_CLASSES[cls]
+                    move_status = "can-move" if class_name in CAN_MOVE else "cannot-move"
+                    label = f"{class_name} ({move_status})"
+                    
                     cv2.rectangle(frame, (x1,y1), (x2,y2), (0,255,0), 2)
                     cv2.putText(frame, label, (x1, max(15, y1-6)), FONT, 0.5, (0,255,0), 1)
 
