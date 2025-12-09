@@ -12,8 +12,6 @@ def live_camera_to_low_fps(camera_index=0, target_fps=2, save_output=False, outp
     width  = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
-    print(f"Camera opened at {orig_fps} FPS ({width}x{height})")
-
     # Setup optional video writer
     if save_output:
         fourcc = cv2.VideoWriter_fourcc(*"mp4v")
@@ -49,8 +47,6 @@ def live_camera_to_low_fps(camera_index=0, target_fps=2, save_output=False, outp
     if save_output:
         out.release()
     cv2.destroyAllWindows()
-    print("Stream closed.")
-
 
 # Example usage:
 live_camera_to_low_fps(target_fps=2, save_output=False)

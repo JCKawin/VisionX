@@ -34,8 +34,6 @@ def reduce_fps(input_path, output_path, target_fps=2):
 
     cap.release()
     out.release()
-    print("Finished. Saved to:", output_path)
-
 
 # Example usage
-reduce_fps("test.mp4", "output_10fps.mp4")
+reduce_fps("test.mp4", "output_2fps.mp4")
