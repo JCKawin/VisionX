@@ -8,7 +8,7 @@ MODEL_BIN   = "./model.ncnn.bin"
 INPUT_NAME  = "in0"
 OUTPUT_NAME = "out0"
 USB_INDEX   = 1
-TARGET_FPS  = 2
+TARGET_FPS  = 60
 CONF_THRESH = 0.20
 NMS_THRESH  = 0.45
 FONT = cv2.FONT_HERSHEY_SIMPLEX
@@ -47,7 +47,7 @@ COCO_CLASSES = [
 
 def init_ncnn(param_path, bin_path, use_vulkan=True, num_threads=4):
     net = ncnn.Net()
-    try: net.opt.use_vulkan_compute = not bool(use_vulkan)
+    try: net.opt.use_vulkan_compute = bool(use_vulkan)
     except: pass
     try: net.opt.num_threads = int(num_threads)
     except: pass
